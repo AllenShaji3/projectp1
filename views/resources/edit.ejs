@@ -1,0 +1,16 @@
+<!--
+  Step 1: This page must allow the user to edit an existing resource.
+-->
+<%- include ('../partials/header') %>
+<header>
+  <h1>Edit: <%= formData.title %> </h1>
+</header>
+
+<hr>
+
+<div>
+  <%- include ('./_form', {actionPath: '/resources/update'}) %> 
+</div>
+
+<%- include ('../partials/footer') %>
+
