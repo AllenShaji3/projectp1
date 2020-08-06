@@ -27,14 +27,9 @@ exports.index = async (req, res) => {
     .populate('user')
     .sort({updatedAt: 'desc'});
 
-    res.render(`${viewPath}/index`, {
-      pageTitle: 'Archive',
-      diaries: diary
-    });
+    res.status(200).json(resources);
   }catch(error) {
-    req.flash('Danger', `There was an error shwoing the details: ${error}
-    `);
-    res.redirect('/');
+    res.status(400).json({message: 'There was an error fetching the Resouces', error});
   }
 };
 

@@ -40,10 +40,11 @@ const ResourceSchema = new mongoose.Schema({
     required: true
   },
 },{
-    timestamps: true
+    timestamps: true,
+    toJSON: {
+      getters: true
+    }
   
-
-
 });
 
 module.exports = mongoose.model('Resource', ResourceSchema);

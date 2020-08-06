@@ -29,8 +29,8 @@ mongoose.connect(process.env.DB_URI, {
 /*
   Step 3: Setup and configure Passport
 */
-const passport = require('passport');
-const session = require('express-session');
+ const passport = require('passport');
+ const session = require('express-session');
 app.use(session({
   secret: 'any salty secret here',
   resave: true,
@@ -43,6 +43,10 @@ const User = require('./models/User');
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+
+
+
 
 
 /*
@@ -92,10 +96,17 @@ app.use('/', (req, res, next) => {
 */
 const routes = require('./routes.js');
 const { nextTick } = require('process');
+//const passport = require('passport');
 app.use('/', routes);
 
-/*
-  Step 8: Start the server
-*/
-const port = process.env.PORT || 3000;
+
+
+const clientRoot = path.join(__dirname, '/client/build');
+app.use((req,res,next) =>{
+  if(req.method =='GET' && req.accepts('html') && !req.is('json') && !req.path.includes('.')) {
+    res.sendFile('index.html', { clientRoot });
+  } else next();
+});
+
+const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
